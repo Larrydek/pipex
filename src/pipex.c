@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/01 15:30:14 by marvin            #+#    #+#             */
-/*   Updated: 2024/09/01 15:30:14 by marvin           ###   ########.fr       */
+/*   Created: 2024/09/18 01:08:33 by marvin            #+#    #+#             */
+/*   Updated: 2024/09/18 01:08:33 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
 
-int main(int argc, char **argv)
+void pipex(char **argv)
 {
-    if (argc != 5)
-    {
-        ft_putstr_fd("Error: structure expected: ./pipex infile cmd1 cmd2 outfile\n", 2);
-        return (EXIT_FAILURE);
-    }
+    int pipefd[2];
+    pid_t pid1;
+    pid_t pid2;
 
-    pipex(argv);
-    return (EXIT_SUCCESS);
+    init_pipes(pipefd);
+
+    pid1 = fork();
+    if (pid1 == 0)
+        first_child(pipefd, argv);  // Maneja cmd1
+
+    pid2 = fork();
+    if (pid2 == 0)
+        second_child(pipefd, argv); // Maneja cmd2
+
+    daddy_process(pipefd, pid1, pid2);
 }

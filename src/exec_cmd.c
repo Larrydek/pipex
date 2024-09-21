@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/01 15:30:14 by marvin            #+#    #+#             */
-/*   Updated: 2024/09/01 15:30:14 by marvin           ###   ########.fr       */
+/*   Created: 2024/09/18 01:07:50 by marvin            #+#    #+#             */
+/*   Updated: 2024/09/18 01:07:50 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
 
-int main(int argc, char **argv)
+void execute_command(char *cmd)
 {
-    if (argc != 5)
-    {
-        ft_putstr_fd("Error: structure expected: ./pipex infile cmd1 cmd2 outfile\n", 2);
-        return (EXIT_FAILURE);
-    }
-
-    pipex(argv);
-    return (EXIT_SUCCESS);
+    char **args;
+    args = ft_split(cmd, ' ');  // Divide el comando en sus argumentos
+    execve(args[0], args, NULL);
+    perror("execve error");
+    exit(EXIT_FAILURE);
 }
