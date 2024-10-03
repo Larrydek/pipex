@@ -12,6 +12,11 @@ PRINTF_DIR = ./lib/printf
 LIBFT = $(LIBFT_DIR)/libft.a
 PRINTF = $(PRINTF_DIR)/libftprintf.a
 
+RED = \033[0;31m
+GREEN = \033[0;32m
+YELLOW = \033[0;33m
+NC = \033[0m 
+
 all: $(NAME)
 
 $(LIBFT):
@@ -21,19 +26,19 @@ $(PRINTF):
 	@make -sC $(PRINTF_DIR)
 
 $(NAME): $(MY_OBJS) $(LIBFT) $(PRINTF)
-	@echo "Compilando el programa..."
+	@echo "$(YELLOW)Compilando el programa..."
 	@gcc $(CFLAGS) $(MY_OBJS) $(LIBFT) $(PRINTF) -o $(NAME)
-	@echo "...Compilado con éxito :)"
+	@echo "$(GREEN)Compilado con éxito :)"
 
 %.o: %.c
 	@gcc $(CFLAGS) -I$(LIBFT_DIR) -I$(PRINTF_DIR) -c $< -o $@
 
 clean:
-	@echo "Limpiando archivos generados..."
+	@echo "$(YELLOW)Limpiando archivos generados..."
 	@rm -f $(MY_OBJS) ./outfile
 	@make clean -sC $(LIBFT_DIR)
 	@make clean -sC $(PRINTF_DIR)
-	@echo "...Todo limpito :)"
+	@echo "$(RED)Todo limpito :)"
 
 fclean: clean
 	@rm -f $(NAME)
@@ -41,6 +46,6 @@ fclean: clean
 	@rm -f $(PRINTF)
 
 re: fclean all
-	@echo "Recompilando..."
+	@echo "$(YELLOW)Recompilando..."
 
 .PHONY: all clean fclean re

@@ -21,7 +21,7 @@ void init_pipes(int pipefd[2])
 	}
 }
 
-void first_child(int pipefd[2], char **argv)
+void first_child(int pipefd[2], char **argv, char **envp)
 {
 	int infile;
 
@@ -31,13 +31,15 @@ void first_child(int pipefd[2], char **argv)
 		perror("infile error");
 		exit(EXIT_FAILURE);
 	}
+	close(pipefd[1]);
 	dup2(infile, STDIN_FILENO);		// Redirige entrada a infile
 	dup2(pipefd[1], STDOUT_FILENO);	// Redirige salida al pipe
 	close(pipefd[0]);				// Cierra el extremo de lectura
 	execute_command(argv[2]);
 }
 
-void second_child(int pipefd[2], char **argv)
+
+void second_child(int pipefd[2], char **argv, char **envp)
 {
 	int outfile;
 
@@ -47,6 +49,7 @@ void second_child(int pipefd[2], char **argv)
 		perror("outfile error");
 		exit(EXIT_FAILURE);
 	}
+	close(pipefd[0]);
 	dup2(pipefd[0], STDIN_FILENO);  // Redirige entrada desde el pipe
 	dup2(outfile, STDOUT_FILENO);   // Redirige salida a outfile
 	close(pipefd[1]);               // Cierra el extremo de escritura
