@@ -20,3 +20,11 @@ void execute_command(char *cmd)
     perror("execve error");
     exit(EXIT_FAILURE);
 }
+
+/*
+Hacer función get_path para obtener la ruta del comando a ejecutar
+*/
+
+/*
+Hacer una función que encuentre el comando
+*/
