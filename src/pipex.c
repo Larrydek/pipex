@@ -18,8 +18,7 @@ void pipex(char **argv, char **envp)
 	pid_t pid1;
 	pid_t pid2;
 
-	init_pipes(pipefd);
-
+	pipe(pipefd);
 	pid1 = fork();
 	if (pid1 == 0)
 		first_child(pipefd, argv, envp);  // Maneja cmd1

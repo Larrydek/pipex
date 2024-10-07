@@ -12,30 +12,33 @@
 
 #include "../inc/pipex.h"
 
-void init_pipes(int pipefd[2])
-{
-	if (pipe(pipefd) == -1)
-	{
-		perror("init pipe error");
-		exit(EXIT_FAILURE);
-	}
-}
+// void init_pipes(int *pipefd)
+// {
+	
+// 	if (pipe(pipefd) == -1)
+// 	{
+// 		perror("init pipe error");
+// 		exit(EXIT_FAILURE);
+// 	}
+// }
 
 void first_child(int pipefd[2], char **argv, char **envp)
 {
 	int infile;
 
-	infile = open(argv[1], O_RDONLY);
+	infile = open(argv[1], O_RDONLY, 0777);
 	if (infile < 0)
 	{
 		perror("infile error");
 		exit(EXIT_FAILURE);
 	}
-	close(pipefd[1]);
-	dup2(infile, STDIN_FILENO);		// Redirige entrada a infile
+	
+	close(pipefd[1]);				// Cierra el extremo de lectura
 	dup2(pipefd[1], STDOUT_FILENO);	// Redirige salida al pipe
-	close(pipefd[0]);				// Cierra el extremo de lectura
-	execute_command(argv[2]);
+	dup2(infile, STDIN_FILENO);		// Redirige entrada a infile
+	close(pipefd[0]);
+	execute_command(argv[2], envp);
+	//close(infile);
 }
 
 
@@ -53,7 +56,7 @@ void second_child(int pipefd[2], char **argv, char **envp)
 	dup2(pipefd[0], STDIN_FILENO);  // Redirige entrada desde el pipe
 	dup2(outfile, STDOUT_FILENO);   // Redirige salida a outfile
 	close(pipefd[1]);               // Cierra el extremo de escritura
-	execute_command(argv[3]);
+	execute_command(argv[3], envp);
 }
 
 void daddy_process(int pipefd[2], pid_t pid1, pid_t pid2)

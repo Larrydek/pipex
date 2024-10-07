@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jde-clee <jde-clee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: larrydek <larrydek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 01:36:36 by jde-clee          #+#    #+#             */
-/*   Updated: 2024/07/11 17:09:43 by jde-clee         ###   ########.fr       */
+/*   Updated: 2024/10/04 11:02:56 by larrydek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,73 @@
 CUENTA LA CANTIDAD DE BYTES A ALMACENAR EN LA DIMENSION DE MÁS AFUERA
 -LA CANTIDAD DE STRINGS SEPARADAS, BÁSICAMENTE-
 */
+// static int	ft_filas(char *s, char c)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	i = 0;
+// 	j = 0;
+// 	while (s[j] != 0)
+// 	{
+// 		while (s[j] == c)
+// 			j++;
+// 		if (s[j] != c && s[j] != 0)
+// 		{
+// 			i++;
+// 			while (s[j] != c && s[j] != 0)
+// 				j++;
+// 		}
+// 	}
+// 	return (i);
+// }
+
+// static void	ft_free(char **matriz, int i)
+// {
+// 	while (i-- > 0)
+// 		free(matriz[i]);
+// 	free(matriz);
+// }
+
+// static char	**ft_matrtiz(char *s, char **matriz, char c, int i)
+// {
+// 	int	j;
+// 	int	k;
+
+// 	k = 0;
+// 	while (s[i])
+// 	{
+// 		while (*(char *)&s[i] == c)
+// 			i++;
+// 		j = i;
+// 		while (s[i] != 0 && *(char *)&s[i] != c)
+// 			i++;
+// 		if (i > j)
+// 		{
+// 			matriz[k] = ft_substr(s, j, (i - j));
+// 			if (!matriz[k])
+// 			{
+// 				ft_free(matriz, k);
+// 				return (NULL);
+// 			}
+// 			k++;
+// 		}
+// 	}
+// 	matriz[k] = 0;
+// 	return (matriz);
+// }
+
+// char	**ft_split(char const *s, char c)
+// {
+// 	char	**matriz;
+// 	int		i;
+
+// 	i = 0;
+// 	matriz = (char **)malloc((ft_filas((char *)s, c) + 1) * sizeof(char *));
+// 	if (!matriz)
+// 		return (0);
+// 	matriz = ft_matrtiz((char *)s, matriz, c, i);
+// 	return (matriz);
 
 size_t	ft_n_strings(char *s, char c)
 {
@@ -72,6 +139,6 @@ char	**ft_split(char *s, char c)
 			return (ft_free_matrix(final_s, j), NULL);
 		i = i + ft_n_chars(s, c, i);
 	}
-	free(s);
+	// free(s);
 	return (final_s[j] = 0, final_s);
 }
