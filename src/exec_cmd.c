@@ -34,14 +34,10 @@ char	*get_path(char *cmd, char **envp)
 	path = NULL;
 	if (cmd[0] == '/')
 		return(ft_strdup(cmd));
-	while (envp)
-	{
-		if (!ft_strncmp(*envp, "PATH=", 5))
-			return (*envp + 5);
+	while (ft_strncmp(*envp, "PATH=", 5))
 		envp++;
-	}
-	all_paths = ft_split(*envp, '=');
-	all_paths = ft_split(all_paths[0], ':');
+	all_paths = ft_split(*envp + 5, ':');
+	printf("all paths:%s\n", all_paths[0]);
 	path = find_cmd_in_path(cmd, all_paths);
 	return (path);
 }
