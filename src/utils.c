@@ -33,12 +33,12 @@ void first_child(int pipefd[2], char **argv, char **envp)
 		exit(EXIT_FAILURE);
 	}
 	
-	close(pipefd[1]);				// Cierra el extremo de lectura
-	dup2(pipefd[1], STDOUT_FILENO);	// Redirige salida al pipe
+	close(pipefd[0]);				// Cierra el extremo de lectura
 	dup2(infile, STDIN_FILENO);		// Redirige entrada a infile
-	close(pipefd[0]);
+	dup2(pipefd[1], STDOUT_FILENO);	// Redirige salida al pipe
+	close(pipefd[1]);
 	execute_command(argv[2], envp);
-	//close(infile);
+	close(infile);
 }
 
 
@@ -52,11 +52,12 @@ void second_child(int pipefd[2], char **argv, char **envp)
 		perror("outfile error");
 		exit(EXIT_FAILURE);
 	}
-	close(pipefd[0]);
-	dup2(pipefd[0], STDIN_FILENO);  // Redirige entrada desde el pipe
+	close(pipefd[1]);
 	dup2(outfile, STDOUT_FILENO);   // Redirige salida a outfile
-	close(pipefd[1]);               // Cierra el extremo de escritura
+	dup2(pipefd[0], STDIN_FILENO);  // Redirige entrada desde el pipe
+	close(pipefd[0]);               // Cierra el extremo de escritura
 	execute_command(argv[3], envp);
+	close(outfile);
 }
 
 void daddy_process(int pipefd[2], pid_t pid1, pid_t pid2)

@@ -19,7 +19,6 @@ int main(int argc, char **argv, char **envp)
 		ft_putstr_fd("Error: structure expected ---> ./pipex infile cmd1 cmd2 outfile\n", 2);
 		return (EXIT_FAILURE);
 	}
-
 	pipex(argv, envp);
 	return (EXIT_SUCCESS);
 }
