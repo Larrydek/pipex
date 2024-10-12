@@ -19,9 +19,21 @@ void execute_command(char *cmd, char **envp)
 
 	printf("path: %s\n", cmd);
 	args = ft_split(cmd, ' '); // Divide el comando en sus argumentos
+	if (!args)
+	{
+		perror("Error in split\n");
+		exit(EXIT_FAILURE);
+	}
 	path = get_path(args[0], envp);
+	if (!path)
+	{
+		perror("Command not found\n");
+		exit(EXIT_FAILURE);
+	}
 	execve(path, &args[0], envp);
 	perror("execve error\n");
+	free(path);
+	ft_free_double_pointer(args);
 	exit(EXIT_FAILURE);
 }
 
@@ -37,8 +49,11 @@ char	*get_path(char *cmd, char **envp)
 	while (ft_strncmp(*envp, "PATH=", 5))
 		envp++;
 	all_paths = ft_split(*envp + 5, ':');
+	if (!all_paths)
+		return (NULL);
 	printf("all paths:%s\n", all_paths[0]);
 	path = find_cmd_in_path(cmd, all_paths);
+	ft_free_double_pointer(all_paths);
 	return (path);
 }
 
@@ -54,6 +69,7 @@ char	*find_cmd_in_path(char *cmd, char **all_paths)
 	{
 		bar_before_cmd = ft_strjoin(all_paths[i], "/");
 		trying_cmd  = ft_strjoin(bar_before_cmd, cmd);
+		free(bar_before_cmd);
 		if (access(trying_cmd, F_OK | X_OK) == 0)
 			return (trying_cmd);
 		i++;

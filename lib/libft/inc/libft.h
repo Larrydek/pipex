@@ -6,7 +6,7 @@
 /*   By: larrydek <larrydek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 20:36:19 by jde-clee          #+#    #+#             */
-/*   Updated: 2024/10/04 11:00:15 by larrydek         ###   ########.fr       */
+/*   Updated: 2024/10/12 19:17:15 by larrydek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 void	ft_free_matrix(char **str, size_t j);
+void	ft_free_double_pointer(char **args);
 size_t	ft_n_strings(char *s, char c);
 size_t	ft_n_chars(char *s, char c, size_t i);
 
