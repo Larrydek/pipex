@@ -6,7 +6,7 @@
 /*   By: larrydek <larrydek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 19:10:21 by larrydek          #+#    #+#             */
-/*   Updated: 2024/10/12 19:14:21 by larrydek         ###   ########.fr       */
+/*   Updated: 2024/10/13 01:59:38 by larrydek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void ft_free_double_pointer(char **args)
 	int i;
 	
 	i = 0;
-	while (args[i])
+	while (args[i] != NULL)
 	{
 		free(args[i]);
 		i++;

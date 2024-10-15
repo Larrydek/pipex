@@ -32,8 +32,8 @@ void execute_command(char *cmd, char **envp)
 	}
 	execve(path, &args[0], envp);
 	perror("execve error\n");
-	free(path);
-	ft_free_double_pointer(args);
+	//free(path);
+	//ft_free_double_pointer(args);
 	exit(EXIT_FAILURE);
 }
 
@@ -44,6 +44,8 @@ char	*get_path(char *cmd, char **envp)
 	char *path;
 
 	path = NULL;
+	if (!cmd || cmd[0] == 0)
+		return (NULL);
 	if (cmd[0] == '/')
 		return(ft_strdup(cmd));
 	while (ft_strncmp(*envp, "PATH=", 5))
@@ -53,7 +55,7 @@ char	*get_path(char *cmd, char **envp)
 		return (NULL);
 	printf("all paths:%s\n", all_paths[0]);
 	path = find_cmd_in_path(cmd, all_paths);
-	ft_free_double_pointer(all_paths);
+	//ft_free_double_pointer(all_paths);
 	return (path);
 }
 
@@ -65,15 +67,21 @@ char	*find_cmd_in_path(char *cmd, char **all_paths)
 	char *trying_cmd;
 
 	i = 0;
+	bar_before_cmd = NULL;
 	while(all_paths[i] != NULL)
 	{
 		bar_before_cmd = ft_strjoin(all_paths[i], "/");
+		if (!bar_before_cmd)
+			return(NULL);
 		trying_cmd  = ft_strjoin(bar_before_cmd, cmd);
-		free(bar_before_cmd);
+		if (!trying_cmd)
+			return (NULL);
+		//free(bar_before_cmd);
 		if (access(trying_cmd, F_OK | X_OK) == 0)
 			return (trying_cmd);
 		i++;
 	}
+	free(trying_cmd);
 	return (NULL);
 }
 

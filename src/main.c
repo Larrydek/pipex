@@ -14,11 +14,14 @@
 
 int main(int argc, char **argv, char **envp)
 {
+	
 	if (argc != 5)
 	{
 		ft_putstr_fd("Error: structure expected ---> ./pipex infile cmd1 cmd2 outfile\n", 2);
 		return (EXIT_FAILURE);
 	}
+	if (argv[2][0] == 0 || argv[3][0] == 0)
+		return (EXIT_FAILURE);
 	pipex(argv, envp);
 	return (EXIT_SUCCESS);
 }

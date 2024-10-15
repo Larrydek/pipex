@@ -56,7 +56,8 @@ void second_child(int pipefd[2], char **argv, char **envp)
 	dup2(outfile, STDOUT_FILENO);   // Redirige salida a outfile
 	dup2(pipefd[0], STDIN_FILENO);  // Redirige entrada desde el pipe
 	close(pipefd[0]);               // Cierra el extremo de escritura
-	execute_command(argv[3], envp);
+	if (argv[3][0] != 0)
+		execute_command(argv[3], envp);
 	close(outfile);
 }
 
