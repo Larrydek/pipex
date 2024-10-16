@@ -14,11 +14,11 @@
 
 void execute_command(char *cmd, char **envp)
 {
-	char **args;
-	char *path;
+	char	**args;
+	char	*path;
 
 	printf("path: %s\n", cmd);
-	args = ft_split(cmd, ' '); // Divide el comando en sus argumentos
+	args = ft_split(cmd, ' ');
 	if (!args)
 	{
 		perror("Error in split\n");
@@ -40,14 +40,14 @@ void execute_command(char *cmd, char **envp)
 //Hacer función get_path para obtener la ruta del comando a ejecutar
 char	*get_path(char *cmd, char **envp)
 {
-	char **all_paths;
-	char *path;
+	char	**all_paths;
+	char	*path;
 
 	path = NULL;
 	if (!cmd || cmd[0] == 0)
 		return (NULL);
 	if (cmd[0] == '/')
-		return(ft_strdup(cmd));
+		return (ft_strdup(cmd));
 	while (ft_strncmp(*envp, "PATH=", 5))
 		envp++;
 	all_paths = ft_split(*envp + 5, ':');
@@ -62,26 +62,21 @@ char	*get_path(char *cmd, char **envp)
 // //Hacer una función que encuentre el comando
 char	*find_cmd_in_path(char *cmd, char **all_paths)
 {
-	int i;
-	char *bar_before_cmd;
-	char *trying_cmd;
+	char	*bar_before_cmd;
+	char	*trying_cmd;
+	int		i;
 
 	i = 0;
 	bar_before_cmd = NULL;
 	while(all_paths[i] != NULL)
 	{
 		bar_before_cmd = ft_strjoin(all_paths[i], "/");
-		if (!bar_before_cmd)
-			return(NULL);
 		trying_cmd  = ft_strjoin(bar_before_cmd, cmd);
-		if (!trying_cmd)
-			return (NULL);
 		//free(bar_before_cmd);
 		if (access(trying_cmd, F_OK | X_OK) == 0)
 			return (trying_cmd);
+		free(trying_cmd);
 		i++;
 	}
-	free(trying_cmd);
 	return (NULL);
 }
-
