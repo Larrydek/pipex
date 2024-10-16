@@ -53,8 +53,8 @@ char	*get_path(char *cmd, char **envp)
 	all_paths = ft_split(*envp + 5, ':');
 	if (!all_paths)
 		return (NULL);
-	printf("all paths:%s\n", all_paths[0]);
 	path = find_cmd_in_path(cmd, all_paths);
+	free(all_paths);
 	//ft_free_double_pointer(all_paths);
 	return (path);
 }
@@ -72,11 +72,13 @@ char	*find_cmd_in_path(char *cmd, char **all_paths)
 	{
 		bar_before_cmd = ft_strjoin(all_paths[i], "/");
 		trying_cmd  = ft_strjoin(bar_before_cmd, cmd);
+		//printf("path:%s\n", trying_cmd);
 		//free(bar_before_cmd);
 		if (access(trying_cmd, F_OK | X_OK) == 0)
 			return (trying_cmd);
 		free(trying_cmd);
 		i++;
 	}
+	//ft_free_double_pointer(all_paths);
 	return (NULL);
 }

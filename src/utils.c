@@ -12,16 +12,6 @@
 
 #include "../inc/pipex.h"
 
-// void init_pipes(int *pipefd)
-// {
-	
-// 	if (pipe(pipefd) == -1)
-// 	{
-// 		perror("init pipe error");
-// 		exit(EXIT_FAILURE);
-// 	}
-// }
-
 void first_child(int pipefd[2], char **argv, char **envp)
 {
 	int infile;

@@ -21,11 +21,11 @@ void pipex(char **argv, char **envp)
 	pipe(pipefd);
 	pid1 = fork();
 	if (pid1 == 0)
-		first_child(pipefd, argv, envp);  // Maneja cmd1
+		first_child(pipefd, argv, envp);
 
 	pid2 = fork();
 	if (pid2 == 0)
-		second_child(pipefd, argv, envp); // Maneja cmd2
+		second_child(pipefd, argv, envp);
 
 	daddy_process(pipefd, pid1, pid2);
 }

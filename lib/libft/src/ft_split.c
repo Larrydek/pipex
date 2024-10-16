@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: larrydek <larrydek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jde-clee <jde-clee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 01:36:36 by jde-clee          #+#    #+#             */
-/*   Updated: 2024/10/15 00:19:38 by larrydek         ###   ########.fr       */
+/*   Updated: 2024/10/16 19:07:51 by jde-clee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,6 @@ char	**ft_split(char *s, char c)
 			return (ft_free_matrix(final_s, j), NULL);
 		i = i + ft_n_chars(s, c, i);
 	}
-	// free(s);
+	//free(s);
 	return (final_s[j] = 0, final_s);
 }
