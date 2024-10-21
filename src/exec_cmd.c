@@ -17,7 +17,7 @@ void execute_command(char *cmd, char **envp)
 	char	**args;
 	char	*path;
 
-	printf("path: %s\n", cmd);
+	//dprintf(2, "path: %s\n", cmd);
 	args = ft_split(cmd, ' ');
 	if (!args)
 	{
@@ -27,7 +27,14 @@ void execute_command(char *cmd, char **envp)
 	path = get_path(args[0], envp);
 	if (!path)
 	{
-		perror("Command not found\n");
+		//revisar este mensaje de error te mete un succes por la cara
+		//Outout:
+		// ./pipex Makefile "         "   "           " out
+		//Command not found3333
+		//: Success
+		//Command not found3333
+		//: Success
+		perror("Command not found3333\n");
 		exit(EXIT_FAILURE);
 	}
 	execve(path, &args[0], envp);

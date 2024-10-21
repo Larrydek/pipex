@@ -1,0 +1,16 @@
+-fallan el parser de la ruta, tienes que bifurcar el caso que sea ruta absoluta o ruta relativa (strcmp es tu amigo)
+
+es decur que execceve como primer argumento te pide la ruta, asiq ue tu miras si es una ruta o un comando,
+si es un cmando lo haces bien porque parseas la ruta,
+pero si ya es una ruto simplemente hay que pasarle ar argv[i] como primer argumente deo execve
+
+- El split cuando te paso "               " te explota
+
+- El unset path te explota el pipex ya que no compruebas que split pueda efectivamente accdeder al array que empieza por "PATH"
+
+
+- si hay un archivo que se llame como un comando te funciona bien .
+
+
+- casos base tambien funciona bien, casi casi bien,
+con un corrector malo lo apruebas ya.
