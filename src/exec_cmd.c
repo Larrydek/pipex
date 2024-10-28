@@ -18,24 +18,24 @@ void execute_command(char *cmd, char **envp)
 	char	*path;
 
 	if (!cmd[0])
-		ft_error("Command '' not found\n", 0);
+		ft_error("Command '' not found\n", 127);
 	args = ft_split(cmd, ' ');
 	if (!args || !args[0])
 	{
 		fprintf(stderr, "%s: command not found\n", cmd);
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	}
 	path = get_path(args[0], envp);
 	if (!path)
 	{
 		fprintf(stderr, "%s: command not found\n", args[0]);
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	}
 	execve(path, &args[0], envp);
-	fprintf(stderr, "%s: no such file or directory\n", cmd);
+	fprintf(stderr, "%s: No such file or directory\n", cmd);
 	//free(path);
 	//ft_free_double_pointer(args);
-	exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
 }
 
 //Hacer función get_path para obtener la ruta del comando a ejecutar
@@ -73,8 +73,6 @@ char	*find_cmd_in_path(char *cmd, char **all_paths)
 	{
 		bar_before_cmd = ft_strjoin(all_paths[i], "/");
 		trying_cmd  = ft_strjoin(bar_before_cmd, cmd);
-		//printf("path:%s\n", trying_cmd);
-		//free(bar_before_cmd);
 		if (access(trying_cmd, F_OK | X_OK) == 0)
 			return (trying_cmd);
 		free(trying_cmd);
