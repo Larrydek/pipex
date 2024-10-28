@@ -26,6 +26,5 @@ void pipex(char **argv, char **envp)
 	pid2 = fork();
 	if (pid2 == 0)
 		second_child(pipefd, argv, envp);
-
 	daddy_process(pipefd, pid1, pid2);
 }

@@ -46,15 +46,26 @@ void second_child(int pipefd[2], char **argv, char **envp)
 	dup2(outfile, STDOUT_FILENO);   // Redirige salida a outfile
 	dup2(pipefd[0], STDIN_FILENO);  // Redirige entrada desde el pipe
 	close(pipefd[0]);               // Cierra el extremo de escritura
-	if (argv[3][0] != 0)
-		execute_command(argv[3], envp);
+	execute_command(argv[3], envp);
 	close(outfile);
 }
 
-void daddy_process(int pipefd[2], pid_t pid1, pid_t pid2)
+int daddy_process(int pipefd[2], pid_t pid1, pid_t pid2)
 {
+	int status;
+
 	close(pipefd[0]);
 	close(pipefd[1]);
-	waitpid(pid1, NULL, 0);
-	waitpid(pid2, NULL, 0);
+	waitpid(pid1, &status, 0);
+	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+		return (WEXITSTATUS(status));
+	waitpid(pid2, &status, 0);
+	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+		return (WEXITSTATUS(status));
+	return (0);
+}
+void ft_error(char *str, int code)
+{
+	ft_putstr_fd(str, 2);
+	exit(code);
 }

@@ -17,28 +17,22 @@ void execute_command(char *cmd, char **envp)
 	char	**args;
 	char	*path;
 
-	//dprintf(2, "path: %s\n", cmd);
+	//fprintf(stderr, "CACA\n");
+	//fflush(stdout);
 	args = ft_split(cmd, ' ');
-	if (!args)
+	if (!args || !args[0])
 	{
-		perror("Error in split\n");
+		ft_error("permission denied:\n", 0);
 		exit(EXIT_FAILURE);
 	}
 	path = get_path(args[0], envp);
 	if (!path)
 	{
-		//revisar este mensaje de error te mete un succes por la cara
-		//Outout:
-		// ./pipex Makefile "         "   "           " out
-		//Command not found3333
-		//: Success
-		//Command not found3333
-		//: Success
-		perror("Command not found3333\n");
+		fprintf(stderr, "command not found: %s\n", args[0]);
 		exit(EXIT_FAILURE);
 	}
 	execve(path, &args[0], envp);
-	perror("execve error\n");
+	fprintf(stderr, "no such file or directory: %s\n", cmd);
 	//free(path);
 	//ft_free_double_pointer(args);
 	exit(EXIT_FAILURE);
@@ -53,7 +47,7 @@ char	*get_path(char *cmd, char **envp)
 	path = NULL;
 	if (!cmd || cmd[0] == 0)
 		return (NULL);
-	if (cmd[0] == '/')
+	if (cmd[0] == '/' || !ft_strncmp(cmd, "./", 2))
 		return (ft_strdup(cmd));
 	while (ft_strncmp(*envp, "PATH=", 5))
 		envp++;
