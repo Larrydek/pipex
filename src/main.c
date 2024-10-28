@@ -19,7 +19,7 @@ int main(int argc, char **argv, char **envp)
 	pid_t pid1;
 	pid_t pid2;
 	if (argc != 5)
-		ft_error("Error: structure expected ---> ./pipex infile cmd1 cmd2 outfile\n", 2);
+		ft_error("Error: structure expected ---> ./pipex infile cmd1 cmd2 outfile\n", 127);
 
 	pipe(pipefd);
 	pid1 = fork();
@@ -30,5 +30,6 @@ int main(int argc, char **argv, char **envp)
 	if (pid2 == 0)
 		second_child(pipefd, argv, envp);
 	daddy_code = daddy_process(pipefd, pid1, pid2);
+	//printf("error_code: %i\n", daddy_code);
 	return (daddy_code);
 }

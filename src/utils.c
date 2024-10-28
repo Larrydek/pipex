@@ -59,8 +59,6 @@ int daddy_process(int pipefd[2], pid_t pid1, pid_t pid2)
 	close(pipefd[0]);
 	close(pipefd[1]);
 	waitpid(pid1, &status, 0);
-	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-		return (WEXITSTATUS(status));
 	waitpid(pid2, &status, 0);
 	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 		return (WEXITSTATUS(status));
