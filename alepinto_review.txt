@@ -1,5 +1,4 @@
 -ruta absoluta y relativa bien gestionadas
 
-- El split cuando te paso "               " te explota
-
 - El unset path te explota el pipex ya que no compruebas que split pueda efectivamente accdeder al array que empieza por "PATH"
+-       Revisar envp también
