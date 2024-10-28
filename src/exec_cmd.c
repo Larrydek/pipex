@@ -17,22 +17,22 @@ void execute_command(char *cmd, char **envp)
 	char	**args;
 	char	*path;
 
-	//fprintf(stderr, "CACA\n");
-	//fflush(stdout);
+	if (!cmd[0])
+		ft_error("Command '' not found\n", 0);
 	args = ft_split(cmd, ' ');
 	if (!args || !args[0])
 	{
-		ft_error("permission denied:\n", 0);
+		fprintf(stderr, "%s: command not found\n", cmd);
 		exit(EXIT_FAILURE);
 	}
 	path = get_path(args[0], envp);
 	if (!path)
 	{
-		fprintf(stderr, "command not found: %s\n", args[0]);
+		fprintf(stderr, "%s: command not found\n", args[0]);
 		exit(EXIT_FAILURE);
 	}
 	execve(path, &args[0], envp);
-	fprintf(stderr, "no such file or directory: %s\n", cmd);
+	fprintf(stderr, "%s: no such file or directory\n", cmd);
 	//free(path);
 	//ft_free_double_pointer(args);
 	exit(EXIT_FAILURE);

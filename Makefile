@@ -28,7 +28,7 @@ $(PRINTF):
 $(NAME): $(MY_OBJS) $(LIBFT) $(PRINTF)
 	@echo "$(YELLOW)Compilando el programa..."
 	@gcc $(CFLAGS) $(MY_OBJS) $(LIBFT) $(PRINTF) -o $(NAME)
-	@echo "$(GREEN)Compilado con éxito :)"
+	@echo "$(GREEN)Compilado con éxito :)$(NC)"
 
 %.o: %.c
 	@gcc $(CFLAGS) -I$(LIBFT_DIR) -I$(PRINTF_DIR) -c $< -o $@
@@ -38,7 +38,7 @@ clean:
 	@rm -f $(MY_OBJS) ./outfile
 	@make clean -sC $(LIBFT_DIR)
 	@make clean -sC $(PRINTF_DIR)
-	@echo "$(RED)Todo limpito :)"
+	@echo "$(RED)Todo limpito :)$(NC)"
 
 fclean: clean
 	@rm -f $(NAME)
@@ -46,6 +46,6 @@ fclean: clean
 	@rm -f $(PRINTF)
 
 re: fclean all
-	@echo "$(YELLOW)Recompilando..."
-
+	@echo "$(YELLOW)Recompilando...$(NC)"
+	
 .PHONY: all clean fclean re

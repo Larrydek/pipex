@@ -1,8 +1,4 @@
--fallan el parser de la ruta, tienes que bifurcar el caso que sea ruta absoluta o ruta relativa (strcmp es tu amigo)
-
-es decur que execceve como primer argumento te pide la ruta, asiq ue tu miras si es una ruta o un comando,
-si es un cmando lo haces bien porque parseas la ruta,
-pero si ya es una ruto simplemente hay que pasarle ar argv[i] como primer argumente deo execve
+-ruta absoluta y relativa bien gestionadas
 
 - El split cuando te paso "               " te explota
 

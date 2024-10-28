@@ -14,11 +14,9 @@
 
 int main(int argc, char **argv, char **envp)
 {
-	
+	//int	daddy_code;
+
 	if (argc != 5)
-	{
-		ft_putstr_fd("Error: structure expected ---> ./pipex infile cmd1 cmd2 outfile\n", 2);
-		return (EXIT_FAILURE);
-	}
+		ft_error("Error: structure expected ---> ./pipex infile cmd1 cmd2 outfile\n", 2);
 	pipex(argv, envp);
 }
