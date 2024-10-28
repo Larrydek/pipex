@@ -22,7 +22,7 @@ void first_child(int pipefd[2], char **argv, char **envp)
 		perror("infile error");
 		exit(EXIT_FAILURE);
 	}
-	
+
 	close(pipefd[0]);				// Cierra el extremo de lectura
 	dup2(infile, STDIN_FILENO);		// Redirige entrada a infile
 	dup2(pipefd[1], STDOUT_FILENO);	// Redirige salida al pipe
@@ -46,6 +46,8 @@ void second_child(int pipefd[2], char **argv, char **envp)
 	dup2(outfile, STDOUT_FILENO);   // Redirige salida a outfile
 	dup2(pipefd[0], STDIN_FILENO);  // Redirige entrada desde el pipe
 	close(pipefd[0]);               // Cierra el extremo de escritura
+	if (!argv[3][0])
+		ft_error("Command '' not found\n", 127);
 	execute_command(argv[3], envp);
 	close(outfile);
 }
