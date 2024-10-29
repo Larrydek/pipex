@@ -18,10 +18,7 @@ void first_child(int pipefd[2], char **argv, char **envp)
 
 	infile = open(argv[1], O_RDONLY, 0777);
 	if (infile < 0)
-	{
-		perror("infile error");
-		exit(EXIT_FAILURE);
-	}
+		ft_error("No such file or directory\n", 1);
 
 	close(pipefd[0]);				// Cierra el extremo de lectura
 	dup2(infile, STDIN_FILENO);		// Redirige entrada a infile
@@ -38,10 +35,7 @@ void second_child(int pipefd[2], char **argv, char **envp)
 
 	outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (outfile < 0)
-	{
-		perror("outfile error");
-		exit(EXIT_FAILURE);
-	}
+		ft_error("Error occurred when trying to open or create the file\n", 2);
 	close(pipefd[1]);
 	dup2(outfile, STDOUT_FILENO);   // Redirige salida a outfile
 	dup2(pipefd[0], STDIN_FILENO);  // Redirige entrada desde el pipe
