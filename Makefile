@@ -4,7 +4,7 @@ MY_SOURCES  = $(shell find ./src -name *.c)
 
 MY_OBJS = $(MY_SOURCES:.c=.o)
 
-CFLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
 
 LIBFT_DIR = ./lib/libft
 PRINTF_DIR = ./lib/printf

@@ -17,15 +17,15 @@ void execute_command(char *cmd, char **envp)
 	char	**args;
 	char	*path;
 
-	if (!envp || !(*envp))
-		ft_error("No such file or directory\n", 2);
+	if (!envp || !*envp)
+		ft_error("No such file or directory\n", 3);
 	if (!cmd[0])
 		ft_error("Command '' not found\n", 127);
 	args = ft_split(cmd, ' ');
 	if (!args || !args[0])
 	{
 		ft_putstr_fd(cmd, 2);
-		ft_error(": command not found\n", 1);
+		ft_error(": command not found\n", 127);
 	}
 	path = get_path(args[0], envp);
 	if (!path)
@@ -49,13 +49,15 @@ char	*get_path(char *cmd, char **envp)
 		return (NULL);
 	if (cmd[0] == '/' || !ft_strncmp(cmd, "./", 2))
 		return (ft_strdup(cmd));
-	if (!envp)
+	if (!envp || !*envp)
 		ft_error("Command not found\n", 2);
-	while (ft_strncmp(*envp, "PATH=", 5))
+	while (*envp && ft_strncmp(*envp, "PATH=", 5))
 		envp++;
+	if (!*envp)
+		ft_error("No such file or directory\n", 6);
 	all_paths = ft_split(*envp + 5, ':');
 	if (!all_paths)
-		return (NULL);
+		return (ft_error("No such file or directory\n", 2) ,NULL);
 	path = find_cmd_in_path(cmd, all_paths);
 	free(all_paths);
 	//ft_free_double_pointer(all_paths);
