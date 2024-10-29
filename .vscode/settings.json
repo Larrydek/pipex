@@ -1,8 +1,0 @@
-{
-    "files.associations": {
-        "stdio.h": "c",
-        "cstdlib": "c",
-        "ft_printf.h": "c",
-        "pipex.h": "c"
-    }
-}

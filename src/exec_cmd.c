@@ -12,7 +12,7 @@
 
 #include "../inc/pipex.h"
 
-void execute_command(char *cmd, char **envp)
+void	execute_command(char *cmd, char **envp)
 {
 	char	**args;
 	char	*path;
@@ -57,10 +57,9 @@ char	*get_path(char *cmd, char **envp)
 		ft_error("No such file or directory\n", 6);
 	all_paths = ft_split(*envp + 5, ':');
 	if (!all_paths)
-		return (ft_error("No such file or directory\n", 2) ,NULL);
+		return (ft_error("No such file or directory\n", 2), NULL);
 	path = find_cmd_in_path(cmd, all_paths);
 	free(all_paths);
-	//ft_free_double_pointer(all_paths);
 	return (path);
 }
 
@@ -73,15 +72,14 @@ char	*find_cmd_in_path(char *cmd, char **all_paths)
 
 	i = 0;
 	bar_before_cmd = NULL;
-	while(all_paths[i] != NULL)
+	while (all_paths[i] != NULL)
 	{
 		bar_before_cmd = ft_strjoin(all_paths[i], "/");
-		trying_cmd  = ft_strjoin(bar_before_cmd, cmd);
+		trying_cmd = ft_strjoin(bar_before_cmd, cmd);
 		if (access(trying_cmd, F_OK | X_OK) == 0)
 			return (trying_cmd);
 		free(trying_cmd);
 		i++;
 	}
-	//ft_free_double_pointer(all_paths);
 	return (NULL);
 }
